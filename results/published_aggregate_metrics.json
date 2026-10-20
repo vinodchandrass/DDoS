@@ -1,0 +1,28 @@
+{
+  "status": "previously reported; not independently rerun in this repository",
+  "internal_validation": {
+    "n": 63254,
+    "TP": 9683,
+    "FN": 586,
+    "FP": 4702,
+    "TN": 48283
+  },
+  "external_TCP_SYN": {
+    "n": 6233,
+    "TP": 1,
+    "FN": 3553,
+    "FP": 18,
+    "TN": 2661
+  },
+  "segmentation_diagnostic": {
+    "short_flow_matched": 3272,
+    "short_flow_total": 3272,
+    "long_flow_matched": 0,
+    "long_flow_total": 281
+  },
+  "limitations": [
+    "Original inference parity unverified",
+    "Feature extractor equivalence unverified",
+    "Segmentation diagnostic is not authenticated exporter reproduction"
+  ]
+}
