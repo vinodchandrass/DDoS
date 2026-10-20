@@ -1,0 +1,3 @@
+## Reproducibility boundaries
+
+Historical audit scripts require separately obtained datasets/PCAP and relevant Python dependencies. They are not the original model inference code. No claim of end-to-end reproduction is made. Aggregate results are transcribed from previously audited checkpoints, not regenerated from the public repository. Original Phase 19 inference parity and external feature-extractor equivalence remain unverified.
