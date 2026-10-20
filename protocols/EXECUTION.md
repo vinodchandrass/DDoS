@@ -24,3 +24,24 @@ python scripts/historical/DDoS_PCAP_Time_Flow_Reconciliation.py --pcap PATH_TO_P
 Output files may contain row-level network identifiers, timestamps, flow tuples and other sensitive traffic evidence. Keep `outputs/` private; do not upload generated artifacts or command-line traces that expose local paths.
 
 No original authenticated SOM–RF inference implementation, feature-extraction parity implementation, or Java inference baseline is supplied. Historical outputs have **not** been rerun in this public repository.
+
+
+## Combined frozen-input replay (recommended)
+
+Run on the Windows workstation that already holds the restricted PCAP and CSV. Clone the public repository separately; **do not commit the resulting output directory**.
+
+```powershell
+cd D:\\DDoS
+git clone https://github.com/vinodchandrass/DDoS.git Reproducibility_Public
+cd Reproducibility_Public
+python -m pip install -r requirements.txt
+python scripts/run_frozen_diagnostics.py --pcap "D:\\DDoS\\data\\TCP-SYN attack 3_17-3_25.pcap" --csv "D:\\DDoS\\data\\TCP-SYNC DATASET.csv" --out "D:\\DDoS\\results\\public_diagnostic_replay"
+```
+
+The runner refuses execution unless both input SHA-256 values match the frozen evidence. It executes all three historical diagnostic analyses sequentially, stopping if a step fails. It creates a *minimal* report at:
+
+`D:\\DDoS\\results\\public_diagnostic_replay\\verification_summary.json`
+
+**The only file to share for this checkpoint is `verification_summary.json`, after reviewing it.** It records boolean input-hash matches and per-script success/output filenames, without embedding packet data, local absolute paths, source hashes, row-level records or private console output. All raw diagnostics and `private_console.log` remain on the workstation. Do not upload the complete output folder.
+
+Passing this runner is a workflow check, **not** numerical comparison to every frozen result, authentication of the original exporter, or verification of original SOM–RF inference parity.
