@@ -1,19 +1,26 @@
 # Reproducibility execution
 
-## Public aggregate-count consistency
+## Public aggregate consistency
 ```bash
 python scripts/validate_aggregates.py
+python -m unittest discover -s tests -v
 ```
-This checks arithmetical consistency of deposited aggregates. It is not an independent replay.
+These tests establish arithmetic consistency only, **not independent data-level replication**.
 
-## Historical PCAP/CSV diagnostics
-Three historical read-only Python analyses exist in the research package:
-- DDoS_Directionality_Final_Evidence_Audit.py
-- DDoS_Final_Flow_Segmentation_Audit.py
-- DDoS_PCAP_Time_Flow_Reconciliation.py
+## Historical PCAP/CSV diagnostic scripts
+First obtain the authorized original PCAP and CSV. Independently verify frozen source hashes documented in [INPUT_MANIFEST.md](INPUT_MANIFEST.md).
 
-Those original scripts have not yet been uploaded pending file-level verification and transfer. Do not assume executable end-to-end reproduction from the current repository.
+```bash
+python scripts/check_input_hashes.py PATH_TO_PCAP --expected 5ca6b0bd8ba7abf09399adffb4bb86505c8dd228273316bbd53e030acfeb5c56
+python scripts/check_input_hashes.py PATH_TO_CSV --expected b24bf115c226025a476e1d65efca23e8c43186932ea484881983f26dc9128d59
+pip install -r requirements.txt
+python scripts/historical/DDoS_Directionality_Final_Evidence_Audit.py --pcap PATH_TO_PCAP --csv PATH_TO_CSV --out outputs/directionality
+python scripts/historical/DDoS_Final_Flow_Segmentation_Audit.py --pcap PATH_TO_PCAP --csv PATH_TO_CSV --out outputs/segmentation
+python scripts/historical/DDoS_PCAP_Time_Flow_Reconciliation.py --pcap PATH_TO_PCAP --csv PATH_TO_CSV --out outputs/reconciliation
+```
 
-Historical inputs require authorized access to the original CSV and PCAP and exact SHA-256 checks. Running diagnostics can produce row-level outputs; **do not commit output folders**.
+**Important:** The first two historical scripts enforce the frozen input hashes; the reconciliation script does *not*, so check the inputs yourself before running it. Script defaults were replaced by required CLI arguments for portability, without intentionally altering analytical logic.
 
-No original authenticated SOM–RF inference implementation, feature-extraction parity implementation, or Java inference baseline is provided.
+Output files may contain row-level network identifiers, timestamps, flow tuples and other sensitive traffic evidence. Keep `outputs/` private; do not upload generated artifacts or command-line traces that expose local paths.
+
+No original authenticated SOM–RF inference implementation, feature-extraction parity implementation, or Java inference baseline is supplied. Historical outputs have **not** been rerun in this public repository.
