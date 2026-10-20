@@ -1,0 +1,1 @@
+Raw datasets, packet captures, row-level diagnostics, frozen model and restricted evidence archive are NOT distributed. Obtain data only from original authorized sources and check licenses. Public aggregate figures/results are provided for inspection only.
