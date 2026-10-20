@@ -28,6 +28,7 @@ jobs:
         run: python -m pip install -r requirements.txt
       - name: CLI input contract checks
         run: |
+          python scripts/run_frozen_diagnostics.py --help
           python scripts/check_input_hashes.py --help
           python scripts/inspect_dataset_schema.py --help
           python scripts/historical/DDoS_Directionality_Final_Evidence_Audit.py --help
