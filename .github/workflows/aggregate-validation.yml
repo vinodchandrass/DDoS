@@ -7,6 +7,7 @@ on:
       - 'tests/**'
       - '.github/workflows/aggregate-validation.yml'
   pull_request:
+  workflow_dispatch:
 jobs:
   check:
     runs-on: ubuntu-latest
@@ -15,6 +16,8 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
+      - name: Restrict release contents to reproducibility artifacts
+        run: python scripts/check_release_scope.py
       - name: Python syntax compilation
         run: python -m compileall -q scripts tests
       - name: Aggregate consistency and unit tests
