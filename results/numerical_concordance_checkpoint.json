@@ -1,0 +1,43 @@
+{
+  "record_type": "frozen_input_aggregate_numerical_concordance",
+  "source": "user-provided sanitized concordance_aggregates_only.json, 2026-10-20",
+  "scope": "PCAP/CSV diagnostic reconstructions, not original SOM-RF inference replay",
+  "input_packets_processed_per_analysis": 5378657,
+  "packet_processing_errors_per_analysis": 0,
+  "csv_labelled_rows": 6233,
+  "external_attack_rows": 3554,
+  "matched_attack_tuples": 3553,
+  "unmatched_attack_rows": 1,
+  "time_offset_candidate_hours_0_matched": 0,
+  "time_offset_candidate_hours_5_5_matched": 3553,
+  "directionality_idle_0p1": {
+    "short_le_1s": {
+      "rows": 3272,
+      "swapped_joint_matches": 3272,
+      "original_joint_matches": 0
+    },
+    "long_gt_1s": {
+      "rows": 281,
+      "swapped_joint_matches": 0,
+      "original_joint_matches": 0
+    }
+  },
+  "segmentation_original_orientation": {
+    "timeout_candidates": 10,
+    "joint_count_and_duration_matches_all_candidates": 0
+  },
+  "concordance": {
+    "attack_rows": true,
+    "pcap_tuple_matches": true,
+    "unmatched_rows": true,
+    "short_swapped_joint": true,
+    "long_swapped_joint": true
+  },
+  "interpretation": "The original-orientation segmentation script yields zero joint matches, while swapped-orientation directionality reconstruction produces 3272 short-flow matches. The procedures apply different matching rules; neither authenticates the original exporter.",
+  "limitations": [
+    "No original inference source parity",
+    "No external feature extractor parity",
+    "No independent raw-data execution within GitHub CI",
+    "No assertion of exporter reconstruction or one-to-one correspondence"
+  ]
+}
