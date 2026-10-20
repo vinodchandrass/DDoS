@@ -45,3 +45,16 @@ The runner refuses execution unless both input SHA-256 values match the frozen e
 **The only file to share for this checkpoint is `verification_summary.json`, after reviewing it.** It records boolean input-hash matches and per-script success/output filenames, without embedding packet data, local absolute paths, source hashes, row-level records or private console output. All raw diagnostics and `private_console.log` remain on the workstation. Do not upload the complete output folder.
 
 Passing this runner is a workflow check, **not** numerical comparison to every frozen result, authentication of the original exporter, or verification of original SOM–RF inference parity.
+
+
+## Numerical concordance extraction (no need to rerun PCAP analyses)
+
+When the three frozen-input analyses have already completed, generate a **whitelist-only aggregate report** from their existing private outputs:
+
+```powershell
+cd D:\\DDoS\\Reproducibility_Public
+git pull --ff-only
+python scripts/extract_concordance.py --root "D:\\DDoS\\results\\public_diagnostic_replay" --out "D:\\DDoS\\results\\public_diagnostic_replay\\concordance_aggregates_only.json"
+```
+
+Inspect `concordance_aggregates_only.json` locally, then share only this small summary privately for numerical comparison. Do not upload the underlying output JSON, row diagnostics, PCAP, CSV or logs to GitHub. This tool does not change any raw data or rerun packet processing. Its numeric checks are intentionally narrow; passing a count comparison does not establish model inference or full exporter parity.
