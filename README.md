@@ -21,7 +21,7 @@ Restricted raw datasets, packet captures, row-level traffic, frozen model weight
 See [data access](docs/DATA_ACCESS.md) and [reproducibility statement](docs/REPRODUCIBILITY.md).
 
 ## Software availability
-The historical diagnostic Python scripts and publication figures are **not yet committed to this repository** pending a further file-by-file release audit. No authenticated Java implementation was used for this DDoS–SDN study.
+Three newly prepared, read-only reproducibility utilities are available: `scripts/validate_aggregates.py` (arithmetic checks of deposited counts), `scripts/check_input_hashes.py` (frozen input identity), and `scripts/inspect_dataset_schema.py` (aggregate schema/label-count checks). The historical PCAP directionality and segmentation scripts are **not yet committed** pending a further file-by-file release audit. No authenticated Java implementation was used for this DDoS–SDN study. See `protocols/EXECUTION.md` and `protocols/INPUT_MANIFEST.md`. Manuscript and publication graphics are excluded by the author's release policy.
 
 ## Licensing
 No explicit software or data license is granted at this time, pending third-party rights review.
