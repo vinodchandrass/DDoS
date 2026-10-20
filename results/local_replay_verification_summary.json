@@ -1,0 +1,35 @@
+{
+  "scope": "frozen-input local diagnostic workflow execution, not original SOM-RF inference parity",
+  "source": "user-supplied verification_summary.json from local Windows execution, 2026-10-20",
+  "input_identity_verified": {
+    "pcap_sha256_match": true,
+    "csv_sha256_match": true
+  },
+  "analyses": [
+    {
+      "name": "directionality",
+      "success": true,
+      "exit_code": 0,
+      "elapsed_seconds": 1251.95
+    },
+    {
+      "name": "segmentation",
+      "success": true,
+      "exit_code": 0,
+      "elapsed_seconds": 1093.76
+    },
+    {
+      "name": "reconciliation",
+      "success": true,
+      "exit_code": 0,
+      "elapsed_seconds": 1126.73
+    }
+  ],
+  "all_inputs_verified": true,
+  "all_scripts_succeeded": true,
+  "limitations": [
+    "This records successful script execution, not numerical matching of detailed outputs",
+    "The original SOM-RF inference pipeline and external feature-extractor parity remain unverified",
+    "Detailed generated outputs are intentionally restricted"
+  ]
+}
