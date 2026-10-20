@@ -1,10 +1,10 @@
-name: Aggregate consistency
+name: Reproducibility static and aggregate checks
 on:
   push:
     paths:
-      - 'results/published_aggregate_metrics.json'
-      - 'scripts/validate_aggregates.py'
-      - 'tests/test_aggregate_consistency.py'
+      - 'results/**'
+      - 'scripts/**'
+      - 'tests/**'
       - '.github/workflows/aggregate-validation.yml'
   pull_request:
 jobs:
@@ -15,7 +15,16 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      - name: Arithmetic consistency
+      - name: Python syntax compilation
+        run: python -m compileall -q scripts tests
+      - name: Aggregate consistency and unit tests
         run: |
           python scripts/validate_aggregates.py
           python -m unittest discover -s tests -v
+      - name: CLI input contract checks
+        run: |
+          python scripts/check_input_hashes.py --help
+          python scripts/inspect_dataset_schema.py --help
+          python scripts/historical/DDoS_Directionality_Final_Evidence_Audit.py --help
+          python scripts/historical/DDoS_Final_Flow_Segmentation_Audit.py --help
+          python scripts/historical/DDoS_PCAP_Time_Flow_Reconciliation.py --help
