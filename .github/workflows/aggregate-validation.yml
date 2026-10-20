@@ -1,0 +1,21 @@
+name: Aggregate consistency
+on:
+  push:
+    paths:
+      - 'results/published_aggregate_metrics.json'
+      - 'scripts/validate_aggregates.py'
+      - 'tests/test_aggregate_consistency.py'
+      - '.github/workflows/aggregate-validation.yml'
+  pull_request:
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Arithmetic consistency
+        run: |
+          python scripts/validate_aggregates.py
+          python -m unittest discover -s tests -v
