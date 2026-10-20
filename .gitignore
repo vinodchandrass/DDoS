@@ -1,0 +1,11 @@
+data/
+outputs/
+*.pcap
+*.pcapng
+*.joblib
+*.pkl
+*.pickle
+__pycache__/
+.ipynb_checkpoints/
+.env
+*.env
