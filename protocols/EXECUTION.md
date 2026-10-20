@@ -23,7 +23,7 @@ python scripts/historical/DDoS_PCAP_Time_Flow_Reconciliation.py --pcap PATH_TO_P
 
 Output files may contain row-level network identifiers, timestamps, flow tuples and other sensitive traffic evidence. Keep `outputs/` private; do not upload generated artifacts or command-line traces that expose local paths.
 
-No original authenticated SOM–RF inference implementation, feature-extraction parity implementation, or Java inference baseline is supplied. Historical outputs have **not** been rerun in this public repository.
+No original authenticated SOM–RF inference implementation, feature-extraction parity implementation, or Java inference baseline is supplied. Historical diagnostics were executed on an authorized local workstation with hash-matched frozen inputs, not in GitHub Actions. The aggregate-only execution record is available in `results/local_replay_verification_summary.json`.
 
 
 ## Combined frozen-input replay (recommended)
@@ -31,18 +31,18 @@ No original authenticated SOM–RF inference implementation, feature-extraction 
 Run on the Windows workstation that already holds the restricted PCAP and CSV. Clone the public repository separately; **do not commit the resulting output directory**.
 
 ```powershell
-cd D:\\DDoS
+cd D:\DDoS
 git clone https://github.com/vinodchandrass/DDoS.git Reproducibility_Public
 cd Reproducibility_Public
 python -m pip install -r requirements.txt
-python scripts/run_frozen_diagnostics.py --pcap "D:\\DDoS\\data\\TCP-SYN attack 3_17-3_25.pcap" --csv "D:\\DDoS\\data\\TCP-SYNC DATASET.csv" --out "D:\\DDoS\\results\\public_diagnostic_replay"
+python scripts/run_frozen_diagnostics.py --pcap "D:\DDoS\data\TCP-SYN attack 3_17-3_25.pcap" --csv "D:\DDoS\data\TCP-SYNC DATASET.csv" --out "D:\DDoS\results\public_diagnostic_replay"
 ```
 
 The runner refuses execution unless both input SHA-256 values match the frozen evidence. It executes all three historical diagnostic analyses sequentially, stopping if a step fails. It creates a *minimal* report at:
 
-`D:\\DDoS\\results\\public_diagnostic_replay\\verification_summary.json`
+`D:\DDoS\results\public_diagnostic_replay\verification_summary.json`
 
-**The only file to share for this checkpoint is `verification_summary.json`, after reviewing it.** It records boolean input-hash matches and per-script success/output filenames, without embedding packet data, local absolute paths, source hashes, row-level records or private console output. All raw diagnostics and `private_console.log` remain on the workstation. Do not upload the complete output folder.
+**Share only `verification_summary.json` after reviewing it for this execution checkpoint.** It records boolean input-hash matches and per-script success/output filenames, without embedding packet data, local absolute paths, source hashes, row-level records or private console output. All raw diagnostics and `private_console.log` remain on the workstation. Do not upload the complete output folder.
 
 Passing this runner is a workflow check, **not** numerical comparison to every frozen result, authentication of the original exporter, or verification of original SOM–RF inference parity.
 
@@ -52,9 +52,21 @@ Passing this runner is a workflow check, **not** numerical comparison to every f
 When the three frozen-input analyses have already completed, generate a **whitelist-only aggregate report** from their existing private outputs:
 
 ```powershell
-cd D:\\DDoS\\Reproducibility_Public
+cd D:\DDoS\Reproducibility_Public
 git pull --ff-only
-python scripts/extract_concordance.py --root "D:\\DDoS\\results\\public_diagnostic_replay" --out "D:\\DDoS\\results\\public_diagnostic_replay\\concordance_aggregates_only.json"
+python scripts/extract_concordance.py --root "D:\DDoS\results\public_diagnostic_replay" --out "D:\DDoS\results\public_diagnostic_replay\concordance_aggregates_only.json"
 ```
 
 Inspect `concordance_aggregates_only.json` locally, then share only this small summary privately for numerical comparison. Do not upload the underlying output JSON, row diagnostics, PCAP, CSV or logs to GitHub. This tool does not change any raw data or rerun packet processing. Its numeric checks are intentionally narrow; passing a count comparison does not establish model inference or full exporter parity.
+
+
+## Verified checkpoint and remaining boundaries
+
+- Frozen PCAP and CSV SHA-256 identity checks: passed on local workstation
+- Directionality, segmentation, reconciliation diagnostics: 3/3 exited successfully
+- Packet count: 5,378,657 per analysis, with zero recorded packet-processing errors
+- PCAP tuple matches: 3,553 of 3,554 external attack rows; one unmatched
+- Under candidate `idle_0p1`, swapped-direction joint matches: 3,272/3,272 short-duration rows and 0/281 long-duration rows
+- Public CI tests check syntax, interface, arithmetic and release scope; they do **not** replay restricted PCAP data
+
+See `results/numerical_concordance_checkpoint.json` for aggregate evidence. Neither the original exporter nor the trained SOM–RF pipeline has been independently reproduced.
